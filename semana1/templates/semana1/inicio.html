@@ -1,0 +1,175 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Semana 1 — {{ curso }}</title>
+    <style>
+        :root {
+            --bg: #0b1020;
+            --card: #141a30;
+            --accent: #6c8cff;
+            --accent2: #22d3ee;
+            --text: #e8ecf8;
+            --muted: #9aa4c7;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background:
+                radial-gradient(1200px 600px at 80% -10%, rgba(108,140,255,.25), transparent 60%),
+                radial-gradient(900px 500px at -10% 110%, rgba(34,211,238,.18), transparent 60%),
+                var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+        .container { max-width: 1080px; margin: 0 auto; padding: 24px; }
+
+        header { padding: 56px 0 32px; text-align: center; }
+        .badge {
+            display: inline-block;
+            background: linear-gradient(90deg, var(--accent), var(--accent2));
+            color: #0b1020;
+            font-weight: 700;
+            letter-spacing: 1px;
+            padding: 6px 16px;
+            border-radius: 999px;
+            font-size: 13px;
+            text-transform: uppercase;
+            margin-bottom: 18px;
+        }
+        h1 {
+            font-size: clamp(28px, 5vw, 46px);
+            background: linear-gradient(90deg, #fff, var(--accent2));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 12px;
+        }
+        .subtitle { color: var(--muted); font-size: 18px; max-width: 720px; margin: 0 auto; }
+
+        section { margin: 40px 0; }
+        h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        h2::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, rgba(108,140,255,.5), transparent);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 18px;
+        }
+        .card {
+            background: var(--card);
+            border: 1px solid rgba(255,255,255,.07);
+            border-radius: 16px;
+            padding: 22px;
+            transition: transform .2s ease, border-color .2s ease;
+        }
+        .card:hover { transform: translateY(-4px); border-color: rgba(108,140,255,.45); }
+        .card .icon { font-size: 30px; }
+        .card h3 { margin: 10px 0 8px; font-size: 17px; }
+        .card p { color: var(--muted); font-size: 14.5px; }
+
+        ul.clean { list-style: none; }
+        ul.clean li {
+            background: var(--card);
+            border-left: 3px solid var(--accent);
+            border-radius: 10px;
+            padding: 14px 18px;
+            margin-bottom: 10px;
+            font-size: 15px;
+        }
+
+        table { width: 100%; border-collapse: collapse; overflow: hidden; border-radius: 14px; }
+        th, td {
+            background: var(--card);
+            padding: 14px 18px;
+            text-align: left;
+            font-size: 15px;
+            border-bottom: 1px solid rgba(255,255,255,.06);
+        }
+        th { color: var(--accent2); text-transform: uppercase; font-size: 12.5px; letter-spacing: 1px; }
+        td:last-child { font-weight: 700; color: var(--accent); white-space: nowrap; }
+
+        footer {
+            text-align: center;
+            color: var(--muted);
+            padding: 36px 0 48px;
+            font-size: 13.5px;
+            border-top: 1px solid rgba(255,255,255,.07);
+            margin-top: 48px;
+        }
+        footer strong { color: var(--text); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <span class="badge">Semana {{ semana }}</span>
+            <h1>{{ tema }}</h1>
+            <p class="subtitle">{{ curso }} — Primera sesión del curso: presentación, fundamentos y conceptos clave sobre las aplicaciones que impulsan a las empresas.</p>
+        </header>
+
+        <section>
+            <h2>🎯 Objetivos de la semana</h2>
+            <ul class="clean">
+                {% for o in objetivos %}
+                <li>{{ o }}</li>
+                {% endfor %}
+            </ul>
+        </section>
+
+        <section>
+            <h2>📚 Contenidos</h2>
+            <div class="grid">
+                {% for c in contenidos %}
+                <div class="card">
+                    <div class="icon">{{ c.icono }}</div>
+                    <h3>{{ c.titulo }}</h3>
+                    <p>{{ c.detalle }}</p>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+
+        <section>
+            <h2>📝 Sistema de evaluación</h2>
+            <table>
+                <thead>
+                    <tr><th>Componente</th><th>Peso</th></tr>
+                </thead>
+                <tbody>
+                    {% for e in evaluacion %}
+                    <tr><td>{{ e.item }}</td><td>{{ e.peso }}</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </section>
+
+        <section>
+            <h2>📖 Bibliografía recomendada</h2>
+            <ul class="clean">
+                {% for b in bibliografia %}
+                <li>{{ b }}</li>
+                {% endfor %}
+            </ul>
+        </section>
+
+        <footer>
+            <strong>{{ curso }}</strong> · Semana {{ semana }} · Página generada con Django 6.1
+        </footer>
+    </div>
+</body>
+</html>
